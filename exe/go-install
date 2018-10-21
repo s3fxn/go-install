@@ -1,0 +1,95 @@
+#!/usr/bin/env ruby
+
+require 'open-uri'
+require 'zlib'
+
+if ARGV == []
+  puts <<-'EOM'
+
+go-install - download and extract golang official binary to /usr/local/go
+
+Usage: go-install version
+
+Examples
+$ sudo go-install latest
+$ sudo go-install 1.11.1
+$ sudo go-install 1.10.4
+
+PATH setting
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:$HOME/go/bin
+
+  EOM
+  exit 1
+end
+
+if Process.uid != 0
+  puts 'go-install requires privilege.'
+  exit 1
+end
+
+versions = open('https://golang.org/dl/').read.scan(/go(\d+\.\d+\.\d+)/).flatten.uniq
+latest = versions.first
+
+if ARGV[0] == 'latest'
+  version = latest
+elsif versions.include?(ARGV[0])
+  version = ARGV[0]
+else
+  puts "version #{ARGV[0]} is not available."
+  exit 1
+end
+
+uname = `uname -a` rescue ''
+unless uname.include?('Linux')
+  puts 'go-install supports only Linux.'
+  exit 1
+end
+
+arch = uname.match(/x86_64|i.86/).to_s
+if arch == ''
+  puts 'go-install supports only x86_64 and x86.'
+  exit 1
+elsif arch == 'x86_64'
+  arch = 'amd64'
+else
+  arch = '386'
+end
+
+verfile = '/usr/local/go/VERSION'
+if FileTest.exist?(verfile)
+  current_ver = open(verfile).read.delete('go')
+  if current_ver == version
+    puts "version #{version} is already installed."
+    exit 1
+  end
+
+  if FileTest.exist?("/usr/local/go#{current_ver}")
+    suffix = Time.now.strftime("%Y%m%d.%H%M%S")
+    backup_dir = "/usr/local/go#{current_ver}.#{suffix}"
+  else
+    backup_dir = "/usr/local/go#{current_ver}"
+  end
+  puts "Backup current version /usr/local/go --> #{backup_dir}"
+  FileUtils.mv('/usr/local/go', backup_dir)
+end
+
+os = 'linux'
+uri = "https://dl.google.com/go/go#{version}.#{os}-#{arch}.tar.gz"
+cmd = 'tar -C /usr/local -xzf -'
+
+puts "Download from #{uri}"
+puts cmd
+
+open("|#{cmd}", 'r+') { |io|
+  io.write open(uri).read
+}
+
+puts <<EOM
+
+go#{version} is installed in /usr/local/go .
+
+Add following lines to .profile or .bash_profile
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:$HOME/go/bin
+EOM
