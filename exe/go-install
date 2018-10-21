@@ -65,7 +65,7 @@ if FileTest.exist?(verfile)
   end
 
   if FileTest.exist?("/usr/local/go#{current_ver}")
-    suffix = Time.now.strftime("%Y%m%d.%H%M%S")
+    suffix = Time.now.strftime('%Y%m%d.%H%M%S')
     backup_dir = "/usr/local/go#{current_ver}.#{suffix}"
   else
     backup_dir = "/usr/local/go#{current_ver}"
