@@ -19,6 +19,9 @@ PATH setting
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/go/bin
 
+Installation of 'dep'
+$ mkdir -p ~/go/bin && curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+
   EOM
   exit 1
 end
