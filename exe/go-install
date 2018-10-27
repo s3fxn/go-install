@@ -95,4 +95,5 @@ go#{version} is installed in /usr/local/go .
 Add following lines to .profile or .bash_profile
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/go/bin
+
 EOM
