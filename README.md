@@ -22,6 +22,12 @@ export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/go/bin
 ```
 
+## Examples
+
+[centos7_golang.sh](https://gist.github.com/s3fxn/e1f3026722b0d074c34223a2cf60cece)
+
+[ubuntu18.04_golang.sh](https://gist.github.com/s3fxn/554de2d09a948d4a563a15ad1fe4db01)
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/s3fxn/go-install.
