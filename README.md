@@ -1,6 +1,6 @@
 # go-install
 
-go-install - download and extract [golang official binary](https://golang.org/dl/) to /usr/local/go
+go-install - download and extract a [golang official binary](https://golang.org/dl/) to /usr/local/go
 
 
 ## Installation
