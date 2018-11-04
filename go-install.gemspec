@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["s3fxn"]
   spec.email         = ["sssfxn@gmail.com"]
 
-  spec.summary       = %q{go-install - download and extract golang official binary to /usr/local/go}
+  spec.summary       = %q{go-install - download and extract a golang official binary to /usr/local/go}
   spec.homepage      = "https://github.com/s3fxn/go-install"
   spec.license       = "MIT"
 
