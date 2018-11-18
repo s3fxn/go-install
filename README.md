@@ -7,6 +7,8 @@ go-install - download and extract a [golang official binary](https://golang.org/
 
     $ gem install go-install
 
+(you may need to run as root or through sudo.)
+
 ## Usage
 
 ```
