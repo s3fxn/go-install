@@ -31,7 +31,7 @@ if Process.uid != 0
   exit 1
 end
 
-versions = open('https://golang.org/dl/').read.scan(/go(\d+\.\d+\.\d+)/).flatten.uniq
+versions = URI.open('https://golang.org/dl/').read.scan(/go(\d+\.\d+\.\d+)/).flatten.uniq
 latest = versions.first
 
 if ARGV[0] == 'latest'
@@ -85,7 +85,7 @@ puts "Download from #{uri}"
 puts cmd
 
 open("|#{cmd}", 'r+') { |io|
-  io.write open(uri).read
+  io.write URI.open(uri).read
 }
 
 puts <<EOM
