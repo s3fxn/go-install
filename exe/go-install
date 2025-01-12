@@ -12,15 +12,12 @@ Usage: go-install version
 
 Examples
 $ sudo go-install latest
-$ sudo go-install 1.11.1
-$ sudo go-install 1.10.4
+$ sudo go-install 1.23.4
+$ sudo go-install 1.22.10
 
 PATH setting
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/go/bin
-
-Installation of 'dep'
-$ mkdir -p ~/go/bin && curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
 
   EOM
   exit 1
@@ -61,7 +58,7 @@ end
 
 verfile = '/usr/local/go/VERSION'
 if FileTest.exist?(verfile)
-  current_ver = open(verfile).read.delete('go')
+  current_ver = open(verfile).read.split("\n").first.delete('go')
   if current_ver == version
     puts "version #{version} is already installed."
     exit 1
