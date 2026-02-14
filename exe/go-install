@@ -76,14 +76,15 @@ end
 
 os = 'linux'
 uri = "https://dl.google.com/go/go#{version}.#{os}-#{arch}.tar.gz"
-cmd = 'tar -C /usr/local -xzf -'
+cmd = %w[tar -C /usr/local -xzf -]
 
 puts "Download from #{uri}"
-puts cmd
+puts cmd.join(" ")
 
-open("|#{cmd}", 'r+') { |io|
-  io.write URI.open(uri).read
-}
+IO.popen(cmd, "wb") do |io|
+  URI.open(uri, "rb") { |remote| IO.copy_stream(remote, io) }
+end
+raise "tar failed (exit #{$?.exitstatus}" unless $?.success?
 
 puts <<EOM
 
